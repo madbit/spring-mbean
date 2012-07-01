@@ -1,0 +1,2 @@
+LogMsg: Sun Jul 01 18:30:44 CEST 2012 jmx.attribute.change AttributeChangeDetected Name = Age Old value = 100 New value = 200
+LogMsg: Sun Jul 01 18:45:55 CEST 2012 jmx.attribute.change AttributeChangeDetected Name = Age Old value = 100 New value = 200

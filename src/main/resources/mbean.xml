@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	<!-- this bean must not be lazily initialized if the exporting is to happen -->
+
+	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+		<!-- <property name="beans">
+			<map>
+				<entry key="bean:name=testBean1" value-ref="testBean" />
+			</map>
+		</property> -->
+		<property name="assembler" ref="assembler" />
+		<property name="namingStrategy" ref="namingStrategy" />
+		<property name="autodetect" value="true" />
+	</bean>
+
+	<bean id="testBean" class="org.madbit.mbean.JmxTestBean">
+		<property name="name" value="TEST" />
+		<property name="age" value="100" />
+	</bean>
+
+	<bean id="jmxAttributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />
+
+	<!-- will create management interface using annotation metadata -->
+	<bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+		<property name="attributeSource" ref="jmxAttributeSource" />
+	</bean>
+
+	<!-- will pick up the ObjectName from the annotation -->
+	<bean id="namingStrategy" class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+		<property name="attributeSource" ref="jmxAttributeSource" />
+	</bean>
+
+	<bean id="annotationTestBean" class="org.madbit.mbean.AnnotationTestBean">
+		<property name="name" value="TEST" />
+		<property name="age" value="100" />
+	</bean>
+
+</beans>
